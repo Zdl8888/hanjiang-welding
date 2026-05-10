@@ -131,7 +131,7 @@ export default function EnHome() {
       </div>
 
       <TrustBadges />
-      <div className="h-16 bg-zinc-950" />
+      <div className="h-24 bg-zinc-950" />
       <ProductsEn />
       <FeaturesEn />
       <AboutEn />
