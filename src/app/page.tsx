@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Component, type ReactNode } from "react";
+import { useState, Component, type ReactNode, useRef, useEffect } from "react";
 import Spline from "@splinetool/react-spline";
 import Products from "@/components/Products";
 import Features from "@/components/Features";
@@ -35,28 +35,45 @@ class ErrorBoundary extends Component<
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [inquiryOpen, setInquiryOpen] = useState(false);
+  const [heroInView, setHeroInView] = useState(true);
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setHeroInView(entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
       <WhatsAppButton />
       <InquiryModal open={inquiryOpen} onClose={() => setInquiryOpen(false)} />
 
-      <div className="relative w-screen h-screen overflow-hidden bg-black">
-      {/* Spline 3D 背景 */}
+      <div ref={heroRef} className="relative w-screen h-screen overflow-hidden bg-black">
+      {/* Spline 3D 背景 — 滚出视野后卸载，提升性能 */}
       <div className="absolute inset-0 z-0">
-        <ErrorBoundary
-          fallback={
-            <div className="w-full h-full flex items-center justify-center bg-zinc-900 text-red-400">
-              3D 场景加载失败，请刷新页面重试
-            </div>
-          }
-        >
-          <Spline
-            scene="https://prod.spline.design/u418FuFyVBpcXItq/scene.splinecode"
-            wasmPath="/wasm"
-            onLoad={() => setLoading(false)}
-          />
-        </ErrorBoundary>
+        {heroInView ? (
+          <ErrorBoundary
+            fallback={
+              <div className="w-full h-full flex items-center justify-center bg-zinc-900 text-red-400">
+                3D 场景加载失败，请刷新页面重试
+              </div>
+            }
+          >
+            <Spline
+              scene="https://prod.spline.design/u418FuFyVBpcXItq/scene.splinecode"
+              wasmPath="/wasm"
+              onLoad={() => setLoading(false)}
+            />
+          </ErrorBoundary>
+        ) : (
+          <div className="w-full h-full bg-zinc-900" />
+        )}
       </div>
 
       {/* 加载动画 */}

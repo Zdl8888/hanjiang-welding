@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Component, type ReactNode } from "react";
+import { useState, Component, type ReactNode, useRef, useEffect } from "react";
 import Spline from "@splinetool/react-spline";
 import ProductsEn from "@/components/en/ProductsEn";
 import FeaturesEn from "@/components/en/FeaturesEn";
@@ -30,17 +30,34 @@ class ErrorBoundary extends Component<{ fallback: ReactNode; children: ReactNode
 export default function EnHome() {
   const [loading, setLoading] = useState(true);
   const [inquiryOpen, setInquiryOpen] = useState(false);
+  const [heroInView, setHeroInView] = useState(true);
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setHeroInView(entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
       <WhatsAppButton />
       <InquiryModal open={inquiryOpen} onClose={() => setInquiryOpen(false)} />
 
-      <div className="relative w-screen h-screen overflow-hidden bg-black">
+      <div ref={heroRef} className="relative w-screen h-screen overflow-hidden bg-black">
         <div className="absolute inset-0 z-0">
-          <ErrorBoundary fallback={<div className="w-full h-full flex items-center justify-center bg-zinc-900 text-red-400">3D scene failed to load. Please refresh.</div>}>
-            <Spline scene="https://prod.spline.design/u418FuFyVBpcXItq/scene.splinecode" wasmPath="/wasm" onLoad={() => setLoading(false)} />
-          </ErrorBoundary>
+          {heroInView ? (
+            <ErrorBoundary fallback={<div className="w-full h-full flex items-center justify-center bg-zinc-900 text-red-400">3D scene failed to load. Please refresh.</div>}>
+              <Spline scene="https://prod.spline.design/u418FuFyVBpcXItq/scene.splinecode" wasmPath="/wasm" onLoad={() => setLoading(false)} />
+            </ErrorBoundary>
+          ) : (
+            <div className="w-full h-full bg-zinc-900" />
+          )}
         </div>
 
         {loading && (
