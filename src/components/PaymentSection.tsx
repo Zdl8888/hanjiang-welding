@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 
-const PAYPAL_CLIENT_ID = "PAYPAL_CLIENT_ID_PLACEHOLDER"; // 替换为你的 PayPal Client ID
+const PAYPAL_CLIENT_ID = "AT9aWe1R1cEUC2iSAe3h2AhJNKApph-e249Obdp2MX5qibX2cv_92ulZ909QoU3MKoM0frXPwdb9QdpT"; // 替换为你的 PayPal Client ID
 
 type PaymentMethod = "paypal" | "wechat" | "alipay" | "wire";
 
@@ -20,7 +20,7 @@ const t = {
   paypalTitle: { zh: "PayPal 在线支付", en: "PayPal Checkout" },
   paypalDesc: { zh: "支持全球主流信用卡和借记卡，PayPal 余额支付。安全加密，买家保护。", en: "Accepts major credit/debit cards and PayPal balance. Encrypted and secure with buyer protection." },
   paypalConfig: { zh: "配置提示", en: "Setup Required" },
-  paypalConfigMsg: { zh: "请前往 developer.paypal.com 登录你的 PayPal 账号，创建应用获取 Client ID，然后替换代码中的 PAYPAL_CLIENT_ID_PLACEHOLDER。", en: "Go to developer.paypal.com, log in with your PayPal account, create an app to get your Client ID, then replace PAYPAL_CLIENT_ID_PLACEHOLDER in the code." },
+  paypalConfigMsg: { zh: "请前往 developer.paypal.com 登录你的 PayPal 账号，创建应用获取 Client ID，然后替换代码中的 AT9aWe1R1cEUC2iSAe3h2AhJNKApph-e249Obdp2MX5qibX2cv_92ulZ909QoU3MKoM0frXPwdb9QdpT。", en: "Go to developer.paypal.com, log in with your PayPal account, create an app to get your Client ID, then replace AT9aWe1R1cEUC2iSAe3h2AhJNKApph-e249Obdp2MX5qibX2cv_92ulZ909QoU3MKoM0frXPwdb9QdpT in the code." },
   paypalSdkError: { zh: "PayPal SDK 加载失败，请刷新重试", en: "PayPal SDK failed to load. Please refresh." },
   paypalSuccess: { zh: "支付成功！感谢您的付款，{name}。我们将在 24 小时内处理您的订单。", en: "Payment successful! Thank you, {name}. We will process your order within 24 hours." },
   paypalError: { zh: "支付失败：{msg}", en: "Payment failed: {msg}" },
@@ -267,7 +267,7 @@ export default function PaymentSection({ lang = "zh" }: Props) {
             <div>
               <h3 className="text-white font-semibold mb-4">{s("paypalTitle")}</h3>
               <p className="text-sm text-gray-400 mb-6">{s("paypalDesc")}</p>
-              {PAYPAL_CLIENT_ID === "PAYPAL_CLIENT_ID_PLACEHOLDER" ? (
+              {PAYPAL_CLIENT_ID === "AT9aWe1R1cEUC2iSAe3h2AhJNKApph-e249Obdp2MX5qibX2cv_92ulZ909QoU3MKoM0frXPwdb9QdpT" ? (
                 <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 text-sm text-yellow-400">
                   <strong>{s("paypalConfig")}：</strong>{s("paypalConfigMsg")}
                 </div>
