@@ -1,6 +1,7 @@
 export interface ProductEn {
   slug: string;
   name: string;
+  image: string;
   desc: string;
   tags: string[];
   fullDesc: string[];
@@ -12,6 +13,7 @@ export const productsEn: ProductEn[] = [
   {
     slug: "ws-315",
     name: "TIG Welder WS-315",
+    image: "/products/ws-315.png",
     desc: "Full digital inverter technology, stable current, beautiful weld formation. Ideal for stainless steel and carbon steel thin plate precision welding.",
     tags: ["TIG", "Inverter", "Precision"],
     fullDesc: [
@@ -33,6 +35,7 @@ export const productsEn: ProductEn[] = [
   {
     slug: "nb-500",
     name: "MIG/MAG Welder NB-500",
+    image: "/products/nb-500.png",
     desc: "High-power wire feeder, high efficiency, low spatter. Widely used in steel structure and shipbuilding industries.",
     tags: ["MIG/MAG", "High Power", "Industrial"],
     fullDesc: [
@@ -54,6 +57,7 @@ export const productsEn: ProductEn[] = [
   {
     slug: "zx7-400",
     name: "ARC Welder ZX7-400",
+    image: "/products/zx7-400.jpg",
     desc: "Portable design, adapts to harsh working conditions. Supports multiple electrode types. Ideal for construction sites and field operations.",
     tags: ["MMA/ARC", "Portable", "Multi-Electrode"],
     fullDesc: [
@@ -75,6 +79,7 @@ export const productsEn: ProductEn[] = [
   {
     slug: "cut-100",
     name: "Plasma Cutter CUT-100",
+    image: "/products/cut-100.jpg",
     desc: "High-efficiency plasma arc cutting, clean cuts with fast speed. Cuts stainless steel, aluminum, and copper plates.",
     tags: ["Plasma", "Cutting", "High Speed"],
     fullDesc: [
@@ -96,6 +101,7 @@ export const productsEn: ProductEn[] = [
   {
     slug: "wsm-200p",
     name: "Pulse TIG Welder WSM-200P",
+    image: "/products/wsm-200p.png",
     desc: "Precise pulse heat input control, ideal for thin plate welding. Minimal deformation, high appearance quality.",
     tags: ["Pulse", "TIG", "Thin Plate"],
     fullDesc: [
@@ -117,6 +123,7 @@ export const productsEn: ProductEn[] = [
   {
     slug: "dhj-630",
     name: "Digital Welder DHJ-630",
+    image: "/products/dhj-630.png",
     desc: "Full digital control system with preset welding parameters. One-touch process recall reduces operator skill requirements.",
     tags: ["Digital", "Smart", "One-Touch"],
     fullDesc: [
