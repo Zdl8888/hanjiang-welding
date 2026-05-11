@@ -96,7 +96,7 @@ export default function EnHome() {
         <div className="absolute inset-0 z-20 flex items-center">
           <div className="px-8 md:px-16 max-w-2xl">
             <div className="inline-block bg-orange-500/20 border border-orange-500/40 text-orange-400 text-xs font-semibold px-3 py-1 rounded-full mb-6">
-              Professional Welding Machine Manufacturer · Since 2005
+              Intelligent Welding Solutions · Since 2005
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight mb-4">
               HanJang Welding
@@ -104,7 +104,7 @@ export default function EnHome() {
               <span className="text-orange-400">Quality Drives Future</span>
             </h1>
             <p className="text-gray-300 text-lg leading-relaxed mb-8 max-w-lg">
-              TIG, MIG/MAG, MMA, Plasma Cutting — complete welding solutions. CE & ISO certified. Exported to 30+ countries worldwide.
+              From standalone machines to robotic welding lines — TIG, MIG/MAG, MMA, Plasma Cutting. CE & ISO certified. Exported to 30+ countries worldwide.
             </p>
             <div className="flex items-center gap-4">
               <a href="/en/products" className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-orange-500/30 cursor-pointer inline-block">
@@ -126,6 +126,14 @@ export default function EnHome() {
           <span>Scroll Down</span>
           <div className="w-5 h-8 border border-gray-600 rounded-full flex justify-center">
             <div className="w-1 h-2 bg-orange-400 rounded-full mt-1 animate-bounce" />
+          </div>
+        </div>
+
+        {/* Robotic arm label */}
+        <div className="absolute bottom-24 right-8 md:right-16 z-20">
+          <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-4 py-2">
+            <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+            <span className="text-white/80 text-sm font-medium">Robotic Welding Arm</span>
           </div>
         </div>
       </div>

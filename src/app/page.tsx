@@ -128,7 +128,7 @@ export default function Home() {
       <div className="absolute inset-0 z-20 flex items-center">
         <div className="px-8 md:px-16 max-w-2xl">
           <div className="inline-block bg-orange-500/20 border border-orange-500/40 text-orange-400 text-xs font-semibold px-3 py-1 rounded-full mb-6">
-            专业电焊机制造商 · 始于 2005
+            智能焊接解决方案 · 始于 2005
           </div>
           <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight mb-4">
             悍将焊机
@@ -136,8 +136,8 @@ export default function Home() {
             <span className="text-orange-400">悍动未来</span>
           </h1>
           <p className="text-gray-300 text-lg leading-relaxed mb-8 max-w-lg">
-            专注高品质焊接设备研发与制造。氩弧焊、二保焊、手工焊、等离子切割 —
-            全套焊接解决方案，为每一道焊缝负责。
+            专注智能焊接设备与自动化产线解决方案。氩弧焊、二保焊、手工焊、等离子切割 —
+            从单机到机器人产线，为每一道焊缝负责。
           </p>
           <div className="flex items-center gap-4">
             <a href="/products" className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-orange-500/30 cursor-pointer inline-block">
@@ -169,6 +169,14 @@ export default function Home() {
         <span>向下滚动</span>
         <div className="w-5 h-8 border border-gray-600 rounded-full flex justify-center">
           <div className="w-1 h-2 bg-orange-400 rounded-full mt-1 animate-bounce" />
+        </div>
+      </div>
+
+      {/* 机械臂标注 */}
+      <div className="absolute bottom-24 right-8 md:right-16 z-20">
+        <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-4 py-2">
+          <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+          <span className="text-white/80 text-sm font-medium">智能焊接机械臂</span>
         </div>
       </div>
     </div>
