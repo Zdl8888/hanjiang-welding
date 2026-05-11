@@ -13,7 +13,7 @@ export const products: Product[] = [
   {
     slug: "ws-315",
     name: "氩弧焊机 WS-315",
-    image: "/products/ws-315.png",
+    image: "/products/ws-315.webp",
     desc: "全数字逆变技术，电流稳定，焊缝成型美观，适用于不锈钢、碳钢薄板精密焊接。",
     tags: ["氩弧焊", "逆变", "精密"],
     fullDesc: [
@@ -35,7 +35,7 @@ export const products: Product[] = [
   {
     slug: "nb-500",
     name: "二保焊机 NB-500",
-    image: "/products/nb-500.png",
+    image: "/products/nb-500.webp",
     desc: "大功率送丝机构，焊接效率高，飞溅少，广泛应用于钢结构、船舶制造。",
     tags: ["二保焊", "大功率", "工业级"],
     fullDesc: [
@@ -57,7 +57,7 @@ export const products: Product[] = [
   {
     slug: "zx7-400",
     name: "手工电弧焊机 ZX7-400",
-    image: "/products/zx7-400.jpg",
+    image: "/products/zx7-400.webp",
     desc: "便携式设计，适应恶劣工况，支持多种焊条，工地、野外作业首选。",
     tags: ["手工焊", "便携", "多焊条"],
     fullDesc: [
@@ -79,7 +79,7 @@ export const products: Product[] = [
   {
     slug: "cut-100",
     name: "等离子切割机 CUT-100",
-    image: "/products/cut-100.jpg",
+    image: "/products/cut-100.webp",
     desc: "高效等离子弧切割，切口平整速度快，不锈钢、铝板、铜板均可切割。",
     tags: ["等离子", "切割", "高效"],
     fullDesc: [
@@ -101,7 +101,7 @@ export const products: Product[] = [
   {
     slug: "wsm-200p",
     name: "脉冲氩弧焊机 WSM-200P",
-    image: "/products/wsm-200p.png",
+    image: "/products/wsm-200p.webp",
     desc: "脉冲控制精确热输入，适合薄板焊接，变形小，外观质量高。",
     tags: ["脉冲", "氩弧焊", "薄板"],
     fullDesc: [
@@ -123,7 +123,7 @@ export const products: Product[] = [
   {
     slug: "dhj-630",
     name: "数字化焊机 DHJ-630",
-    image: "/products/dhj-630.png",
+    image: "/products/dhj-630.webp",
     desc: "全数字化控制系统，预置焊接参数，一键调用工艺，降低操作门槛。",
     tags: ["数字化", "智能", "一键操作"],
     fullDesc: [

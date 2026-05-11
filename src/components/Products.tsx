@@ -28,7 +28,7 @@ export default function Products() {
             >
               {/* 占位图片区 */}
               <div className="relative aspect-square overflow-hidden">
-                <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                 <div className="absolute top-3 right-3 flex gap-1.5">
                   {p.tags.map((t) => (
                     <span

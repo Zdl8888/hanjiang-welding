@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, Component, type ReactNode, useRef, useEffect } from "react";
-import Spline from "@splinetool/react-spline";
+import dynamic from "next/dynamic";
 import ProductsEn from "@/components/en/ProductsEn";
 import FeaturesEn from "@/components/en/FeaturesEn";
 import AboutEn from "@/components/en/AboutEn";
@@ -13,7 +13,22 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
 import PaymentSection from "@/components/PaymentSection";
 
-class ErrorBoundary extends Component<{ fallback: ReactNode; children: ReactNode }, { hasError: boolean }> {
+const SplineScene = dynamic(() => import("@/components/SplineScene"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center bg-zinc-900">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-12 h-12 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
+        <span className="text-gray-400 text-sm">Loading 3D Scene...</span>
+      </div>
+    </div>
+  ),
+});
+
+class ErrorBoundary extends Component<
+  { fallback: ReactNode; children: ReactNode },
+  { hasError: boolean }
+> {
   constructor(props: { fallback: ReactNode; children: ReactNode }) {
     super(props);
     this.state = { hasError: false };
@@ -52,8 +67,14 @@ export default function EnHome() {
       <div ref={heroRef} className="relative w-screen h-screen overflow-hidden bg-black">
         <div className="absolute inset-0 z-0">
           {heroInView ? (
-            <ErrorBoundary fallback={<div className="w-full h-full flex items-center justify-center bg-zinc-900 text-red-400">3D scene failed to load. Please refresh.</div>}>
-              <Spline scene="https://prod.spline.design/u418FuFyVBpcXItq/scene.splinecode" wasmPath="/wasm" onLoad={() => setLoading(false)} />
+            <ErrorBoundary
+              fallback={
+                <div className="w-full h-full flex items-center justify-center bg-zinc-900 text-red-400">
+                  3D scene failed to load. Please refresh.
+                </div>
+              }
+            >
+              <SplineScene onLoad={() => setLoading(false)} />
             </ErrorBoundary>
           ) : (
             <div className="w-full h-full bg-zinc-900" />
@@ -61,7 +82,7 @@ export default function EnHome() {
         </div>
 
         {loading && (
-          <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/80">
+          <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/90">
             <div className="flex flex-col items-center gap-4">
               <div className="w-12 h-12 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
               <span className="text-gray-400 text-sm">Loading 3D Scene...</span>
@@ -126,14 +147,6 @@ export default function EnHome() {
           <span>Scroll Down</span>
           <div className="w-5 h-8 border border-gray-600 rounded-full flex justify-center">
             <div className="w-1 h-2 bg-orange-400 rounded-full mt-1 animate-bounce" />
-          </div>
-        </div>
-
-        {/* Robotic arm label */}
-        <div className="absolute bottom-24 right-8 md:right-16 z-20">
-          <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-4 py-2">
-            <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
-            <span className="text-white/80 text-sm font-medium">Robotic Welding Arm</span>
           </div>
         </div>
       </div>

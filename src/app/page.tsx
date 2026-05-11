@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, Component, type ReactNode, useRef, useEffect } from "react";
-import Spline from "@splinetool/react-spline";
+import dynamic from "next/dynamic";
 import Products from "@/components/Products";
 import Features from "@/components/Features";
 import About from "@/components/About";
@@ -12,6 +12,18 @@ import LanguageSwitch from "@/components/LanguageSwitch";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
 import PaymentSection from "@/components/PaymentSection";
+
+const SplineScene = dynamic(() => import("@/components/SplineScene"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center bg-zinc-900">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-12 h-12 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
+        <span className="text-gray-400 text-sm">3D 场景加载中...</span>
+      </div>
+    </div>
+  ),
+});
 
 class ErrorBoundary extends Component<
   { fallback: ReactNode; children: ReactNode },
@@ -55,7 +67,7 @@ export default function Home() {
       <InquiryModal open={inquiryOpen} onClose={() => setInquiryOpen(false)} />
 
       <div ref={heroRef} className="relative w-screen h-screen overflow-hidden bg-black">
-      {/* Spline 3D 背景 — 滚出视野后卸载，提升性能 */}
+      {/* Spline 3D 背景 — 自动加载，滚出视野后卸载 */}
       <div className="absolute inset-0 z-0">
         {heroInView ? (
           <ErrorBoundary
@@ -65,11 +77,7 @@ export default function Home() {
               </div>
             }
           >
-            <Spline
-              scene="https://prod.spline.design/u418FuFyVBpcXItq/scene.splinecode"
-              wasmPath="/wasm"
-              onLoad={() => setLoading(false)}
-            />
+            <SplineScene onLoad={() => setLoading(false)} />
           </ErrorBoundary>
         ) : (
           <div className="w-full h-full bg-zinc-900" />
@@ -78,7 +86,7 @@ export default function Home() {
 
       {/* 加载动画 */}
       {loading && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/80">
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/90">
           <div className="flex flex-col items-center gap-4">
             <div className="w-12 h-12 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
             <span className="text-gray-400 text-sm">3D 场景加载中...</span>
@@ -169,14 +177,6 @@ export default function Home() {
         <span>向下滚动</span>
         <div className="w-5 h-8 border border-gray-600 rounded-full flex justify-center">
           <div className="w-1 h-2 bg-orange-400 rounded-full mt-1 animate-bounce" />
-        </div>
-      </div>
-
-      {/* 机械臂标注 */}
-      <div className="absolute bottom-24 right-8 md:right-16 z-20">
-        <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-4 py-2">
-          <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
-          <span className="text-white/80 text-sm font-medium">智能焊接机械臂</span>
         </div>
       </div>
     </div>

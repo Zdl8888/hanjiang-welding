@@ -27,7 +27,7 @@ export default function ProductsEn() {
               className="group block bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/10 transition-all duration-300 cursor-pointer"
             >
               <div className="relative aspect-square overflow-hidden">
-                <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                 <div className="absolute top-3 right-3 flex gap-1.5">
                   {p.tags.map((t) => (
                     <span key={t} className="text-[10px] px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30">

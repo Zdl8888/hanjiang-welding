@@ -48,7 +48,7 @@ export default function ProductDetailClientEn({ slug }: { slug: string }) {
       <div className="max-w-7xl mx-auto px-6 md:px-16 pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
           <div className="aspect-square rounded-xl border border-zinc-800 overflow-hidden">
-            <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+            <img src={product.image} alt={product.name} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
           </div>
 
           <div className="flex flex-col justify-center">
