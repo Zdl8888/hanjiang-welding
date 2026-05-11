@@ -120,7 +120,7 @@ export const productsEn: ProductEn[] = [
     desc: "Full digital control system with preset welding parameters. One-touch process recall reduces operator skill requirements.",
     tags: ["Digital", "Smart", "One-Touch"],
     fullDesc: [
-      "The DHJ-630 is Hanjiang's flagship fully digital welding machine, equipped with a 32-bit ARM processor and 100 preset welding process parameters with one-touch recall. Covers TIG, MMA, and carbon arc gouging modes.",
+      "The DHJ-630 is HanJang's flagship fully digital welding machine, equipped with a 32-bit ARM processor and 100 preset welding process parameters with one-touch recall. Covers TIG, MMA, and carbon arc gouging modes.",
       "Features a 7-inch color touch screen displaying real-time current, voltage, and welding speed. USB data export enables process traceability and quality control.",
     ],
     specs: {

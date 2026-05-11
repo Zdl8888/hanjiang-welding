@@ -109,7 +109,7 @@ export default function ContactEn() {
                   </div>
                   <div>
                     <div className="text-sm text-gray-400 mb-0.5">Address</div>
-                    <div className="text-white font-medium">Hanjiang Welding Industrial Park, XX City, XX Province, China</div>
+                    <div className="text-white font-medium">HanJang Welding Industrial Park, XX City, XX Province, China</div>
                   </div>
                 </div>
               </div>

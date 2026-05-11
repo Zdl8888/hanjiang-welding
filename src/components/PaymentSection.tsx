@@ -107,7 +107,7 @@ export default function PaymentSection({ lang = "zh" }: Props) {
         return actions.order.create({
           purchase_units: [{
             amount: { currency_code: currency, value: amount },
-            description: "Hanjiang Welding Machine",
+            description: "HanJang Welding Machine",
           }],
         });
       },
@@ -144,7 +144,7 @@ export default function PaymentSection({ lang = "zh" }: Props) {
       const res = await fetch("/api/pay/wechat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: parseFloat(amount), currency, description: "Hanjiang Welding Machine Order" }),
+        body: JSON.stringify({ amount: parseFloat(amount), currency, description: "HanJang Welding Machine Order" }),
       });
       const data = await res.json();
       if (data.payUrl) {
@@ -171,7 +171,7 @@ export default function PaymentSection({ lang = "zh" }: Props) {
       const res = await fetch("/api/pay/alipay", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: parseFloat(amount), currency, description: "Hanjiang Welding Machine Order" }),
+        body: JSON.stringify({ amount: parseFloat(amount), currency, description: "HanJang Welding Machine Order" }),
       });
       const data = await res.json();
       if (data.payUrl) {

@@ -24,9 +24,9 @@ export default function AboutEn() {
 
           <div>
             <span className="text-orange-400 text-sm font-semibold tracking-widest uppercase">About Us</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mt-3 mb-6">About Hanjiang Welding</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mt-3 mb-6">About HanJang Welding</h2>
             <p className="text-gray-400 leading-relaxed mb-4">
-              Hanjiang Welding focuses on high-quality welding equipment R&D and manufacturing. Since our founding in 2005, we have adhered to the philosophy of "Quality Drives the Future."
+              HanJang Welding focuses on high-quality welding equipment R&D and manufacturing. Since our founding in 2005, we have adhered to the philosophy of "Quality Drives the Future."
             </p>
             <p className="text-gray-400 leading-relaxed mb-4">
               Our 20,000m² modern production base features fully automated SMT lines, triple-proof coating workshops, and 72-hour full-load burn-in testing systems. Core components use Infineon IGBTs and Siemens MCUs from international tier-1 brands.

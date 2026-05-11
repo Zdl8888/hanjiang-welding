@@ -15,7 +15,7 @@ export default function FooterEn() {
               <div className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center">
                 <span className="text-white font-bold text-sm">HJ</span>
               </div>
-              <span className="text-white font-bold tracking-wider">Hanjiang Welding</span>
+              <span className="text-white font-bold tracking-wider">HanJang Welding</span>
             </div>
             <p className="text-sm text-gray-500 leading-relaxed">
               Professional welding equipment manufacturer
@@ -43,7 +43,7 @@ export default function FooterEn() {
           </div>
         </div>
         <div className="border-t border-zinc-800 pt-6 text-center text-xs text-gray-600">
-          &copy; {new Date().getFullYear()} Hanjiang Welding Machine. All rights reserved.
+          &copy; {new Date().getFullYear()} HanJang Welding Machine. All rights reserved.
         </div>
       </div>
     </footer>

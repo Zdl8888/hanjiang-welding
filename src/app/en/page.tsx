@@ -76,7 +76,7 @@ export default function EnHome() {
             <div className="w-10 h-10 rounded-lg bg-orange-500 flex items-center justify-center">
               <span className="text-white font-bold text-lg">HJ</span>
             </div>
-            <span className="text-white text-xl font-bold tracking-wider">Hanjiang Welding</span>
+            <span className="text-white text-xl font-bold tracking-wider">HanJang Welding</span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm text-gray-300 font-medium">
             <a href="#products" className="hover:text-orange-400 transition-colors">Products</a>
@@ -99,7 +99,7 @@ export default function EnHome() {
               Professional Welding Machine Manufacturer · Since 2005
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight mb-4">
-              Hanjiang Welding
+              HanJang Welding
               <br />
               <span className="text-orange-400">Quality Drives Future</span>
             </h1>
