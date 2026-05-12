@@ -3,14 +3,13 @@ import { products } from "@/data/products";
 import Footer from "@/components/Footer";
 
 const specKeys = [
-  "输入电压",
-  "额定输入功率",
+  "输入电源",
+  "额定输入容量",
   "输出电流范围",
   "额定负载持续率",
   "防护等级",
   "绝缘等级",
-  "冷却方式",
-  "重量",
+  "净重",
 ];
 
 export default function SpecsPage() {
@@ -58,7 +57,7 @@ export default function SpecsPage() {
                   <td className="py-3 px-4 text-gray-300 font-medium sticky left-0 bg-black z-10">{key}</td>
                   {products.map((p) => (
                     <td key={p.slug} className="py-3 px-4 text-gray-400 whitespace-nowrap">
-                      {p.specs[key] || "-"}
+                      {p.variants[0].specs[key] || "-"}
                     </td>
                   ))}
                 </tr>

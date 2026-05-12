@@ -3,14 +3,13 @@ import { productsEn } from "@/data/products-en";
 import FooterEn from "@/components/en/FooterEn";
 
 const specKeys = [
-  "Input Voltage",
-  "Rated Input Power",
-  "Output Current Range",
+  "Input Power",
+  "Rated Input Capacity",
+  "Current Range",
   "Rated Duty Cycle",
   "Protection Class",
   "Insulation Class",
-  "Cooling",
-  "Weight",
+  "Net Weight",
 ];
 
 export default function EnSpecsPage() {
@@ -58,7 +57,7 @@ export default function EnSpecsPage() {
                   <td className="py-3 px-4 text-gray-300 font-medium sticky left-0 bg-black z-10">{key}</td>
                   {productsEn.map((p) => (
                     <td key={p.slug} className="py-3 px-4 text-gray-400 whitespace-nowrap">
-                      {p.specs[key] || "-"}
+                      {p.variants[0].specs[key] || "-"}
                     </td>
                   ))}
                 </tr>

@@ -4,10 +4,12 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
 import { getProductBySlugEn } from "@/data/products-en";
+import type { VariantEn } from "@/data/products-en";
 
 export default function ProductDetailClientEn({ slug }: { slug: string }) {
   const router = useRouter();
   const product = getProductBySlugEn(slug);
+  const [activeVariant, setActiveVariant] = useState(0);
   const [toast, setToast] = useState("");
 
   if (!product) {
@@ -21,6 +23,8 @@ export default function ProductDetailClientEn({ slug }: { slug: string }) {
       </div>
     );
   }
+
+  const variant: VariantEn = product.variants[activeVariant];
 
   const showToast = (msg: string) => {
     setToast(msg);
@@ -48,7 +52,12 @@ export default function ProductDetailClientEn({ slug }: { slug: string }) {
       <div className="max-w-7xl mx-auto px-6 md:px-16 pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
           <div className="aspect-square rounded-xl border border-zinc-800 overflow-hidden">
-            <img src={product.image} alt={product.name} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+            <img
+              src={variant.image}
+              alt={variant.name}
+              className="w-full h-full object-cover"
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+            />
           </div>
 
           <div className="flex flex-col justify-center">
@@ -73,15 +82,41 @@ export default function ProductDetailClientEn({ slug }: { slug: string }) {
           </div>
         </div>
 
+        {/* Select Model */}
+        {product.variants.length > 1 && (
+          <div className="mb-10">
+            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+              <span className="w-1 h-6 bg-orange-500 rounded-full" />
+              Select Model
+            </h2>
+            <div className="flex flex-wrap gap-3">
+              {product.variants.map((v, i) => (
+                <button
+                  key={v.name}
+                  onClick={() => setActiveVariant(i)}
+                  className={`px-6 py-3 rounded-lg font-semibold text-sm transition-all cursor-pointer ${
+                    i === activeVariant
+                      ? "bg-orange-500 text-white shadow-lg shadow-orange-500/20"
+                      : "bg-zinc-900/50 border border-zinc-700 text-gray-400 hover:border-orange-500/50 hover:text-white"
+                  }`}
+                >
+                  {v.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Specifications */}
         <div className="mb-16">
           <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
             <span className="w-1 h-6 bg-orange-500 rounded-full" />
-            Specifications
+            Specifications — {variant.name}
           </h2>
           <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden">
             <table className="w-full">
               <tbody>
-                {Object.entries(product.specs).map(([key, value], i) => (
+                {Object.entries(variant.specs).map(([key, value], i) => (
                   <tr key={key} className={i % 2 === 0 ? "bg-transparent" : "bg-zinc-900/30"}>
                     <td className="px-6 py-3.5 text-sm text-gray-400 w-1/3 border-r border-zinc-800">{key}</td>
                     <td className="px-6 py-3.5 text-sm text-white">{value}</td>
@@ -92,13 +127,14 @@ export default function ProductDetailClientEn({ slug }: { slug: string }) {
           </div>
         </div>
 
+        {/* Key Features */}
         <div className="mb-16">
           <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
             <span className="w-1 h-6 bg-orange-500 rounded-full" />
-            Key Features
+            Key Features — {variant.name}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {product.features.map((f, i) => (
+            {variant.features.map((f, i) => (
               <div key={i} className="flex items-center gap-3 p-4 rounded-lg bg-zinc-900/50 border border-zinc-800">
                 <svg className="w-5 h-5 text-orange-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
