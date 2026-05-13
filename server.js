@@ -53,10 +53,7 @@ if (!fs.existsSync(ROOT)) {
 // ============================================================
 // Payment API - 微信支付 / 支付宝
 // ============================================================
-const PAYMENT_CONFIG = {
-  wechat: { enabled: false, appId: "", mchId: "", apiKey: "", notifyUrl: "https://yourdomain.com/api/pay/wechat/notify" },
-  alipay: { enabled: false, appId: "", privateKey: "", alipayPublicKey: "", notifyUrl: "https://yourdomain.com/api/pay/alipay/notify" },
-};
+const payment = require("./lib/payment.js");
 
 function jsonRes(res, code, data) {
   res.writeHead(code, { "Content-Type": "application/json; charset=utf-8" });
@@ -73,33 +70,78 @@ function readBody(req) {
   });
 }
 
+function getQueryParams(url) {
+  const q = url.split("?")[1];
+  if (!q) return {};
+  const params = {};
+  for (const part of q.split("&")) {
+    const [k, v] = part.split("=");
+    params[decodeURIComponent(k)] = decodeURIComponent(v || "");
+  }
+  return params;
+}
+
 async function handleApi(req, res, pathname) {
+  const url = req.url || "";
+
   if (pathname === "/api/pay/wechat" && req.method === "POST") {
     const body = await readBody(req);
-    if (!PAYMENT_CONFIG.wechat.enabled) {
-      jsonRes(res, 503, { error: "微信支付尚未配置。请先申请微信支付商户号并填入密钥。" });
+    if (!body.amount || parseFloat(body.amount) <= 0) {
+      jsonRes(res, 400, { error: "请输入有效金额" });
       return true;
     }
-    if (!body.amount || body.amount <= 0) {
-      jsonRes(res, 400, { error: "金额无效" });
-      return true;
+    try {
+      const result = await payment.createWechatOrder({
+        amount: body.amount,
+        currency: body.currency || "CNY",
+        description: body.description || "HanJang Welding Machine Order",
+      });
+      jsonRes(res, 200, result);
+    } catch (err) {
+      jsonRes(res, 503, { error: err.message || "微信支付下单失败" });
     }
-    jsonRes(res, 503, { error: "微信支付后端待实现。请配置商户信息后完成开发。" });
     return true;
   }
+
   if (pathname === "/api/pay/alipay" && req.method === "POST") {
     const body = await readBody(req);
-    if (!PAYMENT_CONFIG.alipay.enabled) {
-      jsonRes(res, 503, { error: "支付宝支付尚未配置。请先申请支付宝商户号并填入密钥。" });
+    if (!body.amount || parseFloat(body.amount) <= 0) {
+      jsonRes(res, 400, { error: "请输入有效金额" });
       return true;
     }
-    if (!body.amount || body.amount <= 0) {
-      jsonRes(res, 400, { error: "金额无效" });
-      return true;
+    try {
+      const result = await payment.createAlipayOrder({
+        amount: body.amount,
+        currency: body.currency || "CNY",
+        description: body.description || "HanJang Welding Machine Order",
+      });
+      jsonRes(res, 200, result);
+    } catch (err) {
+      jsonRes(res, 503, { error: err.message || "支付宝下单失败" });
     }
-    jsonRes(res, 503, { error: "支付宝支付后端待实现。请配置商户信息后完成开发。" });
     return true;
   }
+
+  if (pathname === "/api/pay/status" && req.method === "GET") {
+    const params = getQueryParams(url);
+    const { orderId, type } = params;
+    if (!orderId || !type) {
+      jsonRes(res, 400, { error: "缺少参数 orderId 和 type" });
+      return true;
+    }
+    if (type !== "wechat" && type !== "alipay") {
+      jsonRes(res, 400, { error: "无效的支付类型" });
+      return true;
+    }
+    try {
+      const result = await payment.checkPaymentStatus({ type, orderId });
+      jsonRes(res, 200, result);
+    } catch (err) {
+      jsonRes(res, 500, { error: err.message || "查询支付状态失败", status: "error" });
+    }
+    return true;
+  }
+
   return false;
 }
 

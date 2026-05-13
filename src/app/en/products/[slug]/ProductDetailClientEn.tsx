@@ -5,12 +5,14 @@ import Link from "next/link";
 import { useState } from "react";
 import { getProductBySlugEn } from "@/data/products-en";
 import type { VariantEn } from "@/data/products-en";
+import PaymentModal from "@/components/PaymentModal";
 
 export default function ProductDetailClientEn({ slug }: { slug: string }) {
   const router = useRouter();
   const product = getProductBySlugEn(slug);
   const [activeVariant, setActiveVariant] = useState(0);
   const [toast, setToast] = useState("");
+  const [showPayment, setShowPayment] = useState(false);
 
   if (!product) {
     return (
@@ -75,8 +77,8 @@ export default function ProductDetailClientEn({ slug }: { slug: string }) {
               <button onClick={() => showToast("Customer support coming soon!")} className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-3.5 rounded-lg font-semibold transition-colors cursor-pointer">
                 Inquiry Now
               </button>
-              <button onClick={() => showToast("Payment coming soon! WeChat Pay, Alipay, PayPal will be supported.")} className="flex-1 border border-zinc-600 hover:border-orange-400 text-gray-300 hover:text-orange-400 py-3.5 rounded-lg font-semibold transition-all cursor-pointer">
-                Buy Now
+              <button onClick={() => setShowPayment(true)} className="flex-1 border border-zinc-600 hover:border-orange-400 text-gray-300 hover:text-orange-400 py-3.5 rounded-lg font-semibold transition-all cursor-pointer">
+                {variant.price ? `Buy Now - $${variant.price.toLocaleString()} USD` : "Buy Now"}
               </button>
             </div>
           </div>
@@ -148,9 +150,21 @@ export default function ProductDetailClientEn({ slug }: { slug: string }) {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8 border-t border-zinc-800">
           <button onClick={() => router.push("/en")} className="text-gray-500 hover:text-white transition-colors text-sm cursor-pointer">← Back to Home</button>
           <button onClick={() => showToast("Customer support coming soon!")} className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors cursor-pointer">Inquiry Now</button>
-          <button onClick={() => showToast("Payment coming soon! WeChat Pay, Alipay, PayPal will be supported.")} className="border border-zinc-600 hover:border-orange-400 text-gray-300 hover:text-orange-400 px-8 py-3 rounded-lg font-semibold transition-all cursor-pointer">Buy Now</button>
+          <button onClick={() => setShowPayment(true)} className="border border-zinc-600 hover:border-orange-400 text-gray-300 hover:text-orange-400 px-8 py-3 rounded-lg font-semibold transition-all cursor-pointer">
+            {variant.price ? `Buy Now - $${variant.price.toLocaleString()} USD` : "Buy Now"}
+          </button>
         </div>
       </div>
+
+      {showPayment && (
+        <PaymentModal
+          lang="en"
+          productName={product.name}
+          variantName={variant.name}
+          prefillAmount={variant.price}
+          onClose={() => setShowPayment(false)}
+        />
+      )}
     </div>
   );
 }

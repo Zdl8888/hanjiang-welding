@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { QRCodeSVG } from "qrcode.react";
 
 const PAYPAL_CLIENT_ID = "AT9aWe1R1cEUC2iSAe3h2AhJNKApph-e249Obdp2MX5qibX2cv_92ulZ909QoU3MKoM0frXPwdb9QdpT"; // 替换为你的 PayPal Client ID
 
 type PaymentMethod = "paypal" | "wechat" | "alipay" | "wire";
+type PaymentStatus = "idle" | "loading" | "waiting" | "paid" | "closed" | "error";
 
 interface Props {
   lang?: "zh" | "en";
@@ -27,14 +29,25 @@ const t = {
   paypalCancel: { zh: "您已取消支付。如需帮助请联系我们。", en: "Payment cancelled. Contact us if you need help." },
   wechatTitle: { zh: "微信支付", en: "WeChat Pay" },
   wechatDesc: { zh: "支持微信余额、绑定银行卡支付。点击下方按钮跳转至微信支付页面完成付款。", en: "WeChat Pay balance and linked bank cards. Click below to proceed to WeChat Pay." },
-  wechatGenerating: { zh: "正在生成支付链接...", en: "Generating payment link..." },
+  wechatGenerating: { zh: "正在生成支付二维码...", en: "Generating payment QR code..." },
   wechatButton: { zh: "使用微信支付", en: "Pay with WeChat" },
   wechatUnavailable: { zh: "微信支付暂不可用", en: "WeChat Pay is currently unavailable" },
+  wechatScanHint: { zh: "请使用微信扫描二维码完成支付", en: "Scan the QR code with WeChat to pay" },
+  wechatOrderId: { zh: "订单号", en: "Order ID" },
+  wechatWaiting: { zh: "等待支付中...", en: "Waiting for payment..." },
+  wechatPaid: { zh: "支付成功！我们将在 24 小时内处理您的订单。", en: "Payment successful! We will process your order within 24 hours." },
+  wechatExpired: { zh: "二维码已过期，请重新下单", en: "QR code expired. Please try again." },
+  wechatCancel: { zh: "取消支付", en: "Cancel Payment" },
   alipayTitle: { zh: "支付宝", en: "Alipay" },
   alipayDesc: { zh: "支持支付宝余额、花呗、绑定银行卡支付。点击下方按钮跳转至支付宝收银台完成付款。", en: "Alipay balance, Huabei, and linked bank cards. Click below to proceed to Alipay checkout." },
-  alipayGenerating: { zh: "正在生成支付链接...", en: "Generating payment link..." },
+  alipayGenerating: { zh: "正在生成支付二维码...", en: "Generating payment QR code..." },
   alipayButton: { zh: "使用支付宝支付", en: "Pay with Alipay" },
   alipayUnavailable: { zh: "支付宝支付暂不可用", en: "Alipay is currently unavailable" },
+  alipayScanHint: { zh: "请使用支付宝扫描二维码完成支付", en: "Scan the QR code with Alipay to pay" },
+  alipayWaiting: { zh: "等待支付中...", en: "Waiting for payment..." },
+  alipayPaid: { zh: "支付成功！我们将在 24 小时内处理您的订单。", en: "Payment successful! We will process your order within 24 hours." },
+  alipayExpired: { zh: "二维码已过期，请重新下单", en: "QR code expired. Please try again." },
+  alipayCancel: { zh: "取消支付", en: "Cancel Payment" },
   wireTitle: { zh: "银行电汇 (T/T)", en: "Bank Wire Transfer (T/T)" },
   wireDesc: { zh: "适用于大额订单（建议 $1,000 以上）。买家通过银行直接将款项汇至我方账户，安全可靠，手续费低。", en: "For large orders ($1,000+ recommended). Buyer transfers funds directly to our account. Secure with low fees." },
   beneficiary: { zh: "收款方", en: "Beneficiary" },
@@ -72,6 +85,52 @@ export default function PaymentSection({ lang = "zh" }: Props) {
   const [message, setMessage] = useState<{ type: "success" | "error" | "info"; text: string } | null>(null);
   const paypalRef = useRef<HTMLDivElement>(null);
   const paypalRendered = useRef(false);
+
+  // 二维码支付状态
+  const [wechatOrder, setWechatOrder] = useState<{ codeUrl: string; orderId: string } | null>(null);
+  const [alipayOrder, setAlipayOrder] = useState<{ qrCode: string; orderId: string } | null>(null);
+  const [wechatStatus, setWechatStatus] = useState<PaymentStatus>("idle");
+  const [alipayStatus, setAlipayStatus] = useState<PaymentStatus>("idle");
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // 清理轮询
+  const stopPolling = useCallback(() => {
+    if (pollRef.current) {
+      clearInterval(pollRef.current);
+      pollRef.current = null;
+    }
+  }, []);
+
+  // 轮询支付状态
+  const startPolling = useCallback((type: "wechat" | "alipay", orderId: string) => {
+    stopPolling();
+    pollRef.current = setInterval(async () => {
+      try {
+        const res = await fetch(`/api/pay/status?orderId=${orderId}&type=${type}`);
+        const data = await res.json();
+        if (data.status === "paid") {
+          stopPolling();
+          if (type === "wechat") setWechatStatus("paid");
+          else setAlipayStatus("paid");
+        } else if (data.status === "closed") {
+          stopPolling();
+          if (type === "wechat") setWechatStatus("closed");
+          else setAlipayStatus("closed");
+        } else if (data.status === "error") {
+          stopPolling();
+          if (type === "wechat") setWechatStatus("error");
+          else setAlipayStatus("error");
+        }
+      } catch {
+        // 网络错误时不改变状态，继续轮询
+      }
+    }, 3000);
+  }, [stopPolling]);
+
+  // 组件卸载时清理
+  useEffect(() => {
+    return () => stopPolling();
+  }, [stopPolling]);
 
   // 加载 PayPal SDK
   useEffect(() => {
@@ -132,59 +191,85 @@ export default function PaymentSection({ lang = "zh" }: Props) {
     }).render(paypalRef.current);
   }, [paypalLoaded, amount, currency, lang]);
 
-  // 微信支付（跳转链接）
+  // 微信支付（获取二维码）
   const handleWechatPay = useCallback(async () => {
     if (!amount || parseFloat(amount) <= 0) {
       setMessage({ type: "error", text: s("invalidAmount") });
       return;
     }
     setWechatLoading(true);
+    setWechatStatus("loading");
     setMessage(null);
+    setWechatOrder(null);
+    stopPolling();
     try {
       const res = await fetch("/api/pay/wechat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: parseFloat(amount), currency, description: "HanJang Welding Machine Order" }),
+        body: JSON.stringify({ amount: parseFloat(amount), currency: currency === "USD" ? "CNY" : currency, description: "HanJang Welding Machine Order" }),
       });
       const data = await res.json();
-      if (data.payUrl) {
-        window.location.href = data.payUrl;
+      if (data.codeUrl) {
+        setWechatOrder({ codeUrl: data.codeUrl, orderId: data.orderId });
+        setWechatStatus("waiting");
+        startPolling("wechat", data.orderId);
       } else {
+        setWechatStatus("error");
         setMessage({ type: "error", text: data.error || s("wechatUnavailable") });
       }
     } catch {
+      setWechatStatus("error");
       setMessage({ type: "error", text: s("networkError") });
     } finally {
       setWechatLoading(false);
     }
-  }, [amount, currency, lang]);
+  }, [amount, currency, lang, stopPolling, startPolling]);
 
-  // 支付宝支付（跳转链接）
+  // 支付宝支付（获取二维码）
   const handleAlipay = useCallback(async () => {
     if (!amount || parseFloat(amount) <= 0) {
       setMessage({ type: "error", text: s("invalidAmount") });
       return;
     }
     setAlipayLoading(true);
+    setAlipayStatus("loading");
     setMessage(null);
+    setAlipayOrder(null);
+    stopPolling();
     try {
       const res = await fetch("/api/pay/alipay", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: parseFloat(amount), currency, description: "HanJang Welding Machine Order" }),
+        body: JSON.stringify({ amount: parseFloat(amount), currency: currency === "USD" ? "CNY" : currency, description: "HanJang Welding Machine Order" }),
       });
       const data = await res.json();
-      if (data.payUrl) {
-        window.location.href = data.payUrl;
+      if (data.qrCode) {
+        setAlipayOrder({ qrCode: data.qrCode, orderId: data.orderId });
+        setAlipayStatus("waiting");
+        startPolling("alipay", data.orderId);
       } else {
+        setAlipayStatus("error");
         setMessage({ type: "error", text: data.error || s("alipayUnavailable") });
       }
     } catch {
+      setAlipayStatus("error");
       setMessage({ type: "error", text: s("networkError") });
     } finally {
       setAlipayLoading(false);
     }
-  }, [amount, currency, lang]);
+  }, [amount, currency, lang, stopPolling, startPolling]);
+
+  const resetWechat = useCallback(() => {
+    setWechatOrder(null);
+    setWechatStatus("idle");
+    stopPolling();
+  }, [stopPolling]);
+
+  const resetAlipay = useCallback(() => {
+    setAlipayOrder(null);
+    setAlipayStatus("idle");
+    stopPolling();
+  }, [stopPolling]);
 
   const tabs: { key: PaymentMethod; label: string; icon: string }[] = [
     { key: "paypal", label: "PayPal", icon: "P" },
@@ -280,52 +365,186 @@ export default function PaymentSection({ lang = "zh" }: Props) {
           {method === "wechat" && (
             <div>
               <h3 className="text-white font-semibold mb-4">{s("wechatTitle")}</h3>
-              <p className="text-sm text-gray-400 mb-6">{s("wechatDesc")}</p>
-              <button
-                onClick={handleWechatPay}
-                disabled={wechatLoading}
-                className="w-full bg-green-600 hover:bg-green-500 text-white py-3 rounded-lg font-semibold transition-colors cursor-pointer disabled:opacity-60 flex items-center justify-center gap-2"
-              >
-                {wechatLoading ? (
-                  <>
-                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    {s("wechatGenerating")}
-                  </>
-                ) : (
-                  <>
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348z" />
+
+              {/* 已支付成功 */}
+              {wechatStatus === "paid" && (
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
+                  </div>
+                  <p className="text-green-400 font-medium">{s("wechatPaid")}</p>
+                </div>
+              )}
+
+              {/* 二维码已过期 */}
+              {wechatStatus === "closed" && (
+                <div className="text-center py-6">
+                  <p className="text-yellow-400 mb-4">{s("wechatExpired")}</p>
+                  <button onClick={resetWechat} className="bg-green-600 hover:bg-green-500 text-white px-6 py-2 rounded-lg transition-colors cursor-pointer">
                     {s("wechatButton")}
-                  </>
-                )}
-              </button>
+                  </button>
+                </div>
+              )}
+
+              {/* 显示二维码等待支付 */}
+              {(wechatStatus === "loading" || wechatStatus === "waiting") && (
+                <div className="text-center">
+                  {wechatStatus === "loading" ? (
+                    <div className="py-8 flex items-center justify-center gap-2 text-gray-400">
+                      <span className="w-5 h-5 border-2 border-gray-500 border-t-white rounded-full animate-spin" />
+                      {s("wechatGenerating")}
+                    </div>
+                  ) : wechatOrder ? (
+                    <div>
+                      <div className="bg-white p-4 rounded-xl inline-block mb-4">
+                        <QRCodeSVG value={wechatOrder.codeUrl} size={200} level="M" />
+                      </div>
+                      <p className="text-gray-300 text-sm mb-2">{s("wechatScanHint")}</p>
+                      <p className="text-gray-500 text-xs mb-4">
+                        {s("wechatOrderId")}: {wechatOrder.orderId}
+                      </p>
+                      <div className="flex items-center justify-center gap-2 text-orange-400 text-sm mb-4">
+                        <span className="w-4 h-4 border-2 border-orange-400/30 border-t-orange-400 rounded-full animate-spin" />
+                        {s("wechatWaiting")}
+                      </div>
+                      <button onClick={resetWechat} className="text-gray-500 hover:text-gray-300 text-sm transition-colors cursor-pointer">
+                        {s("wechatCancel")}
+                      </button>
+                    </div>
+                  ) : null}
+                </div>
+              )}
+
+              {/* 错误状态 */}
+              {wechatStatus === "error" && (
+                <div className="text-center py-6">
+                  <p className="text-red-400 mb-4">{message?.text || s("wechatUnavailable")}</p>
+                  <button onClick={() => { setWechatStatus("idle"); handleWechatPay(); }} className="bg-green-600 hover:bg-green-500 text-white px-6 py-2 rounded-lg transition-colors cursor-pointer">
+                    {s("wechatButton")}
+                  </button>
+                </div>
+              )}
+
+              {/* 初始状态 — 未下单 */}
+              {wechatStatus === "idle" && (
+                <>
+                  <p className="text-sm text-gray-400 mb-6">{s("wechatDesc")}</p>
+                  <button
+                    onClick={handleWechatPay}
+                    disabled={wechatLoading}
+                    className="w-full bg-green-600 hover:bg-green-500 text-white py-3 rounded-lg font-semibold transition-colors cursor-pointer disabled:opacity-60 flex items-center justify-center gap-2"
+                  >
+                    {wechatLoading ? (
+                      <>
+                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        {s("wechatGenerating")}
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348z" />
+                        </svg>
+                        {s("wechatButton")}
+                      </>
+                    )}
+                  </button>
+                </>
+              )}
             </div>
           )}
 
           {method === "alipay" && (
             <div>
               <h3 className="text-white font-semibold mb-4">{s("alipayTitle")}</h3>
-              <p className="text-sm text-gray-400 mb-6">{s("alipayDesc")}</p>
-              <button
-                onClick={handleAlipay}
-                disabled={alipayLoading}
-                className="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-lg font-semibold transition-colors cursor-pointer disabled:opacity-60 flex items-center justify-center gap-2"
-              >
-                {alipayLoading ? (
-                  <>
-                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    {s("alipayGenerating")}
-                  </>
-                ) : (
-                  <>
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18.5c-4.694 0-8.5-3.806-8.5-8.5S7.306 3.5 12 3.5s8.5 3.806 8.5 8.5-3.806 8.5-8.5 8.5z"/>
+
+              {/* 已支付成功 */}
+              {alipayStatus === "paid" && (
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
+                  </div>
+                  <p className="text-green-400 font-medium">{s("alipayPaid")}</p>
+                </div>
+              )}
+
+              {/* 二维码已过期 */}
+              {alipayStatus === "closed" && (
+                <div className="text-center py-6">
+                  <p className="text-yellow-400 mb-4">{s("alipayExpired")}</p>
+                  <button onClick={resetAlipay} className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg transition-colors cursor-pointer">
                     {s("alipayButton")}
-                  </>
-                )}
-              </button>
+                  </button>
+                </div>
+              )}
+
+              {/* 显示二维码等待支付 */}
+              {(alipayStatus === "loading" || alipayStatus === "waiting") && (
+                <div className="text-center">
+                  {alipayStatus === "loading" ? (
+                    <div className="py-8 flex items-center justify-center gap-2 text-gray-400">
+                      <span className="w-5 h-5 border-2 border-gray-500 border-t-white rounded-full animate-spin" />
+                      {s("alipayGenerating")}
+                    </div>
+                  ) : alipayOrder ? (
+                    <div>
+                      <div className="bg-white p-4 rounded-xl inline-block mb-4">
+                        <QRCodeSVG value={alipayOrder.qrCode} size={200} level="M" />
+                      </div>
+                      <p className="text-gray-300 text-sm mb-2">{s("alipayScanHint")}</p>
+                      <p className="text-gray-500 text-xs mb-4">
+                        {s("wechatOrderId")}: {alipayOrder.orderId}
+                      </p>
+                      <div className="flex items-center justify-center gap-2 text-orange-400 text-sm mb-4">
+                        <span className="w-4 h-4 border-2 border-orange-400/30 border-t-orange-400 rounded-full animate-spin" />
+                        {s("alipayWaiting")}
+                      </div>
+                      <button onClick={resetAlipay} className="text-gray-500 hover:text-gray-300 text-sm transition-colors cursor-pointer">
+                        {s("alipayCancel")}
+                      </button>
+                    </div>
+                  ) : null}
+                </div>
+              )}
+
+              {/* 错误状态 */}
+              {alipayStatus === "error" && (
+                <div className="text-center py-6">
+                  <p className="text-red-400 mb-4">{message?.text || s("alipayUnavailable")}</p>
+                  <button onClick={() => { setAlipayStatus("idle"); handleAlipay(); }} className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg transition-colors cursor-pointer">
+                    {s("alipayButton")}
+                  </button>
+                </div>
+              )}
+
+              {/* 初始状态 — 未下单 */}
+              {alipayStatus === "idle" && (
+                <>
+                  <p className="text-sm text-gray-400 mb-6">{s("alipayDesc")}</p>
+                  <button
+                    onClick={handleAlipay}
+                    disabled={alipayLoading}
+                    className="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-lg font-semibold transition-colors cursor-pointer disabled:opacity-60 flex items-center justify-center gap-2"
+                  >
+                    {alipayLoading ? (
+                      <>
+                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        {s("alipayGenerating")}
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18.5c-4.694 0-8.5-3.806-8.5-8.5S7.306 3.5 12 3.5s8.5 3.806 8.5 8.5-3.806 8.5-8.5 8.5z"/>
+                        </svg>
+                        {s("alipayButton")}
+                      </>
+                    )}
+                  </button>
+                </>
+              )}
             </div>
           )}
 

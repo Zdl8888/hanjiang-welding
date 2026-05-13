@@ -5,12 +5,14 @@ import Link from "next/link";
 import { useState } from "react";
 import { getProductBySlug } from "@/data/products";
 import type { Variant } from "@/data/products";
+import PaymentModal from "@/components/PaymentModal";
 
 export default function ProductDetailClient({ slug }: { slug: string }) {
   const router = useRouter();
   const product = getProductBySlug(slug);
   const [activeVariant, setActiveVariant] = useState(0);
   const [toast, setToast] = useState("");
+  const [showPayment, setShowPayment] = useState(false);
 
   if (!product) {
     return (
@@ -91,10 +93,10 @@ export default function ProductDetailClient({ slug }: { slug: string }) {
                 咨询客服
               </button>
               <button
-                onClick={() => showToast("支付功能即将上线，敬请期待！将接入微信支付、支付宝、PayPal")}
+                onClick={() => setShowPayment(true)}
                 className="flex-1 border border-zinc-600 hover:border-orange-400 text-gray-300 hover:text-orange-400 py-3.5 rounded-lg font-semibold transition-all cursor-pointer"
               >
-                立即购买
+                {variant.price ? `立即购买 - $${variant.price.toLocaleString()} USD` : "立即购买"}
               </button>
             </div>
           </div>
@@ -172,11 +174,21 @@ export default function ProductDetailClient({ slug }: { slug: string }) {
           <button onClick={() => showToast("客服功能即将上线，敬请期待！")} className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors cursor-pointer">
             咨询客服
           </button>
-          <button onClick={() => showToast("支付功能即将上线，敬请期待！将接入微信支付、支付宝、PayPal")} className="border border-zinc-600 hover:border-orange-400 text-gray-300 hover:text-orange-400 px-8 py-3 rounded-lg font-semibold transition-all cursor-pointer">
-            立即购买
+          <button onClick={() => setShowPayment(true)} className="border border-zinc-600 hover:border-orange-400 text-gray-300 hover:text-orange-400 px-8 py-3 rounded-lg font-semibold transition-all cursor-pointer">
+            {variant.price ? `立即购买 - $${variant.price.toLocaleString()} USD` : "立即购买"}
           </button>
         </div>
       </div>
+
+      {showPayment && (
+        <PaymentModal
+          lang="zh"
+          productName={product.name}
+          variantName={variant.name}
+          prefillAmount={variant.price}
+          onClose={() => setShowPayment(false)}
+        />
+      )}
     </div>
   );
 }
