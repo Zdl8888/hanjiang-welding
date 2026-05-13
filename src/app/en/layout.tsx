@@ -26,6 +26,9 @@ export const metadata: Metadata = {
     "max-image-preview": "large",
     "max-video-preview": -1,
   },
+  verification: {
+    google: "s9AQjA1Kzj4VXqYPFzyZAdyHAHPLntWdd1gIqkqIYHE",
+  },
   openGraph: {
     type: "website",
     siteName: "HanJang Welding",
