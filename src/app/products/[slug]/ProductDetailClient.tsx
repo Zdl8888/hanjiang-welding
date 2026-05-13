@@ -6,6 +6,7 @@ import { useState } from "react";
 import { getProductBySlug } from "@/data/products";
 import type { Variant } from "@/data/products";
 import PaymentModal from "@/components/PaymentModal";
+import { ProductLd, BreadcrumbLd } from "@/components/JsonLd";
 
 export default function ProductDetailClient({ slug }: { slug: string }) {
   const router = useRouter();
@@ -37,6 +38,20 @@ export default function ProductDetailClient({ slug }: { slug: string }) {
 
   return (
     <div className="min-h-screen bg-black">
+      <ProductLd
+        name={product.name}
+        description={product.desc}
+        image={product.image}
+        price={variant.price}
+        sku={product.slug}
+      />
+      <BreadcrumbLd
+        items={[
+          { name: "首页", href: "/" },
+          { name: "产品中心", href: "/#products" },
+          { name: product.name, href: `/products/${product.slug}` },
+        ]}
+      />
       {toast && (
         <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-zinc-800 border border-zinc-700 text-white px-6 py-3 rounded-lg shadow-lg text-sm animate-pulse">
           {toast}

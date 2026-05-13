@@ -12,6 +12,7 @@ import LanguageSwitch from "@/components/LanguageSwitch";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
 import PaymentSection from "@/components/PaymentSection";
+import { OrganizationLd, WebSiteLd } from "@/components/JsonLd";
 
 const SplineScene = dynamic(() => import("@/components/SplineScene"), {
   ssr: false,
@@ -61,6 +62,8 @@ export default function EnHome() {
 
   return (
     <>
+      <OrganizationLd />
+      <WebSiteLd />
       <WhatsAppButton />
       <InquiryModal open={inquiryOpen} onClose={() => setInquiryOpen(false)} />
 

@@ -22,11 +22,11 @@ export const productsEn: ProductEn[] = [
     slug: "wsm-400",
     name: "TIG Welder WSM-400",
     image: "/products/wsm-400.png",
-    desc: "IGBT digital inverter TIG welder with stable current and excellent arc stiffness. Ideal for stainless steel and carbon steel precision welding.",
-    tags: ["TIG", "IGBT", "Precision"],
+    desc: "Professional IGBT inverter TIG welder with smooth arc and high-frequency ignition. Designed for precision welding of stainless steel, carbon steel, and alloy steel. CE certified, factory direct from China.",
+    tags: ["TIG Welder", "IGBT Inverter", "Precision", "Stainless Steel", "Industrial"],
     fullDesc: [
-      "The WSM-400 series features IGBT full digital inverter and pulse control technology, delivering precise heat input control, stable output current, and excellent arc stiffness. Suitable for precision welding of stainless steel, carbon steel, and alloy steel.",
-      "Independent adjustment of pulse frequency, duty cycle, and base current significantly reduces welding deformation with beautiful weld appearance. Triple-proof coating ensures reliable operation in harsh environments. ISO9001 and EU CE certified.",
+      "The WSM-400 TIG welder delivers precision arc control through advanced IGBT full digital inverter technology. Whether you're welding thin-gauge stainless steel, carbon steel, or alloy steel, the stable output current and excellent arc stiffness ensure consistent, professional results every time.",
+      "With high-frequency arc ignition achieving a 99%+ success rate, independent pulse adjustment (frequency, duty cycle, and base current), and triple-proof coating for harsh workshop environments — this machine is built for reliability. ISO9001 certified and EU CE approved. Available in water-cooled and air-cooled configurations with 5m, 10m, or 15m cable kits.",
     ],
     variants: [
       {
@@ -162,8 +162,8 @@ export const productsEn: ProductEn[] = [
     slug: "wsm-400-pulse",
     name: "Pulse TIG Welder WSM-400",
     image: "/products/wsm-400-pulse.jpg",
-    desc: "IGBT full digital inverter pulse TIG welder with independent pulse frequency, duty cycle, and base current adjustment. Ideal for thin plate and stainless steel precision welding.",
-    tags: ["Pulse TIG", "IGBT", "Thin Plate"],
+    desc: "IGBT full digital inverter pulse TIG welder with independent pulse frequency, duty cycle and base current control. Perfect for thin plate and stainless steel precision welding. Factory direct from China.",
+    tags: ["Pulse TIG", "IGBT Inverter", "Thin Plate", "Precision", "Digital Pulse"],
     fullDesc: [
       "The WSM-400 Pulse series features IGBT full digital inverter and independent pulse control technology. Pulse frequency, duty cycle, and base current can all be independently adjusted for precise heat input control. Suitable for thin plate and precision welding of stainless steel, carbon steel, and alloy steel.",
       "Pulse function effectively reduces welding deformation with beautiful weld formation and minimal HAZ. Triple-proof coating ensures reliable operation in harsh environments. HF arc ignition success rate 99%+. ISO9001 and EU CE certified.",
@@ -188,11 +188,11 @@ export const productsEn: ProductEn[] = [
     slug: "nbm-500",
     name: "MIG/MAG Welder NBM-500",
     image: "/products/nbm-500.png",
-    desc: "Industrial-grade gas shielded welder with high-power wire feeder and excellent spatter control. Widely used in steel structures, shipbuilding, and bridge engineering.",
-    tags: ["MIG/MAG", "High Power", "Industrial"],
+    desc: "Heavy-duty industrial MIG/MAG welder with 100% duty cycle at 500A. Pulse MIG for aluminum, synergic control for steel. Built for shipyards, steel structures, and 24/7 production environments.",
+    tags: ["MIG/MAG", "Industrial", "Heavy Duty", "Aluminum", "Shipyard"],
     fullDesc: [
-      "The NBM-500 series features full-bridge inverter soft-switching technology with dual IGBT power modules, delivering stable wire feeding speed and excellent welding efficiency. Widely used in steel structures, shipbuilding, and bridge engineering.",
-      "Supports both solid wire and flux-cored wire modes with excellent spatter control and beautiful weld formation. Built-in inductance adjustment optimizes arc characteristics. EU CE certified.",
+      "The NBM-500 is a true industrial workhorse — full-bridge IGBT inverter with 100% duty cycle at 500A (40°C ambient), designed for non-stop production in shipyards, steel structure fabrication, and heavy machinery manufacturing.",
+      "Five welding modes in one machine: Pulse MIG for aluminum (5083/6061), Synergic MIG for carbon steel, Standard MIG/MAG, MMA stick, and Lift TIG. Supports 1.0mm, 1.2mm, and 1.6mm wire diameters with a separate 4-roller enclosed wire feeder. IP23 rated with Class H insulation for the toughest environments. EU CE certified.",
     ],
     variants: [
       {
@@ -294,11 +294,11 @@ export const productsEn: ProductEn[] = [
     slug: "zx7-400",
     name: "ARC Welder ZX7-400",
     image: "/products/zx7-400.jpg",
-    desc: "Portable inverter design for harsh working conditions. Supports multiple electrode types. Ideal for construction sites and field operations.",
-    tags: ["MMA/ARC", "Portable", "Multi-Electrode"],
+    desc: "Compact portable ARC welder with IGBT inverter technology. Dual voltage auto-detection, generator-compatible for remote job sites. Supports acid, basic, and cellulose electrodes up to 4.0mm.",
+    tags: ["MMA/ARC", "Portable", "Dual Voltage", "Field Welding", "Construction"],
     fullDesc: [
-      "The ZX7-400 series uses IGBT inverter technology for compact size and lightweight design. Supports acid, basic, and cellulose electrodes for construction sites, outdoor, and high-altitude applications.",
-      "Features anti-stick, arc force, and hot start functions, significantly reducing spatter and improving arc stability. Wide voltage adaptation range allows generator power supply. EU CE certified.",
+      "The ZX7-400 packs serious welding power into a portable IGBT inverter package — just 25kg yet capable of running 4.0mm electrodes. Dual voltage auto-detection (220V/380V) means you can plug into site power or a generator without reconfiguration.",
+      "Smart arc features include anti-stick, adjustable arc force, and hot start for smooth ignition with difficult electrodes (E6010, E7018). Wide voltage tolerance makes it ideal for construction sites, field repairs, pipeline work, and remote locations where power quality is unreliable. EU CE certified.",
     ],
     variants: [
       { name: "ZX7-400 Torch 4m + Ground 2m", image: "/products/zx7-400.jpg", price: 200, specs: { "Model": "ZX7-400", "Input Power": "3P 380V ±15%", "Frequency": "50/60 Hz", "Rated Input Capacity": "18.2 KVA", "Rated Input Current": "27.6 A", "Current Range": "40–400 A", "Rated Output Voltage": "36 V", "No-Load Voltage": "67.5 V", "Rated Duty Cycle": "60%", "Electrode Diameter": "Φ1.6–4.0 mm", "Torch Cable": "4m", "Ground Cable": "2m", "Protection Class": "IP21S", "Insulation Class": "F", "Dimensions": "633 × 368 × 578 mm", "Net Weight": "25 kg" }, features: ["Portable design, easy to carry", "220V/380V dual voltage auto-detection", "Anti-stick, arc force & hot start", "Generator compatible for field operations"] },
@@ -311,11 +311,11 @@ export const productsEn: ProductEn[] = [
     slug: "lgk-100",
     name: "Plasma Cutter LGK-100",
     image: "/products/lgk-100.jpg",
-    desc: "High-efficiency non-contact pilot arc cutting with clean cuts and fast speed. Cuts stainless steel, aluminum, and copper. Supports handheld and CNC use.",
-    tags: ["Plasma", "Cutting", "High Speed"],
+    desc: "High-speed IGBT plasma cutter with non-contact HF pilot arc. Clean cuts through carbon steel up to 30mm, stainless steel, aluminum, and copper. Supports both handheld and CNC table operation.",
+    tags: ["Plasma Cutter", "CNC Compatible", "High Speed", "Industrial Cutting", "Multi-Metal"],
     fullDesc: [
-      "The LGK-100 series uses IGBT inverter and non-contact HF arc ignition technology for fast cutting speed and clean cuts with no secondary grinding. Suitable for stainless steel, carbon steel, aluminum, copper, and titanium alloy.",
-      "Equipped with automatic gas-electric integrated torch, 2T/4T functions, gas detection, and adjustable post-flow. Multiple protections: overheat, overcurrent, phase loss, under/over voltage. EU CE certified.",
+      "The LGK-100 plasma cutter delivers industrial-grade cutting performance through IGBT inverter technology with non-contact HF pilot arc ignition. Clean quality cuts through 25mm carbon steel, with max severance at 30mm. Also handles stainless steel, aluminum, copper, and titanium alloy.",
+      "Designed for both handheld use and CNC table integration. Features automatic gas-electric integrated torch, 2T/4T trigger modes, gas detection, and adjustable post-flow cooling. Full protection suite: overheat, overcurrent, phase loss, and voltage fluctuation safeguards. EU CE certified.",
     ],
     variants: [
       { name: "LGK-100 10m Torch Kit", image: "/products/lgk-100.jpg", price: 1000, specs: { "Model": "LGK-100", "Input Power": "3P 380V ±15%", "Frequency": "50/60 Hz", "Rated Input Capacity": "15 KVA", "Current Range": "30–100 A", "No-Load Voltage": "310 V", "Rated Duty Cycle": "40% @ 80A", "Power Factor": "0.73", "Efficiency": "85%", "Quality Cut": "Carbon Steel 25 mm", "Max Cut": "Carbon Steel 30 mm", "Arc Ignition": "Non-contact HF Pilot Arc", "Torch Kit": "10m", "Protection Class": "IP21", "Insulation Class": "F", "Dimensions": "430 × 330 × 165 mm", "Net Weight": "22 kg" }, features: ["HF arc ignition, fast cutting speed", "Clean cuts, no secondary grinding", "Grid cutting + arc-break protection", "Cuts stainless steel, aluminum, copper & more"] },

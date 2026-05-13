@@ -1,17 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://hanjiangwelding.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://hanjiangwelding.com/en/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://hanjiangwelding.com/products/ws-315</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://hanjiangwelding.com/products/nb-500</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://hanjiangwelding.com/products/zx7-400</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://hanjiangwelding.com/products/cut-100</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://hanjiangwelding.com/products/wsm-200p</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://hanjiangwelding.com/products/dhj-630</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://hanjiangwelding.com/en/products/ws-315</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://hanjiangwelding.com/en/products/nb-500</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://hanjiangwelding.com/en/products/zx7-400</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://hanjiangwelding.com/en/products/cut-100</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://hanjiangwelding.com/en/products/wsm-200p</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://hanjiangwelding.com/en/products/dhj-630</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- Chinese Home -->
+  <url>
+    <loc>https://hanjiang-welding.vercel.app/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://hanjiang-welding.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hanjiang-welding.vercel.app/en/" />
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!-- English Home -->
+  <url>
+    <loc>https://hanjiang-welding.vercel.app/en/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hanjiang-welding.vercel.app/en/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://hanjiang-welding.vercel.app/" />
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!-- Specs Pages -->
+  <url>
+    <loc>https://hanjiang-welding.vercel.app/specs</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hanjiang-welding.vercel.app/en/specs</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Product Pages - ZH -->
+  <url>
+    <loc>https://hanjiang-welding.vercel.app/products/wsm-400</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://hanjiang-welding.vercel.app/products/wsm-400" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hanjiang-welding.vercel.app/en/products/wsm-400" />
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hanjiang-welding.vercel.app/products/wsm-400-pulse</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://hanjiang-welding.vercel.app/products/wsm-400-pulse" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hanjiang-welding.vercel.app/en/products/wsm-400-pulse" />
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hanjiang-welding.vercel.app/products/nbm-500</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://hanjiang-welding.vercel.app/products/nbm-500" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hanjiang-welding.vercel.app/en/products/nbm-500" />
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hanjiang-welding.vercel.app/products/zx7-400</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://hanjiang-welding.vercel.app/products/zx7-400" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hanjiang-welding.vercel.app/en/products/zx7-400" />
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hanjiang-welding.vercel.app/products/lgk-100</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://hanjiang-welding.vercel.app/products/lgk-100" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hanjiang-welding.vercel.app/en/products/lgk-100" />
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hanjiang-welding.vercel.app/products/dhj-630</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://hanjiang-welding.vercel.app/products/dhj-630" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hanjiang-welding.vercel.app/en/products/dhj-630" />
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Product Pages - EN -->
+  <url>
+    <loc>https://hanjiang-welding.vercel.app/en/products/wsm-400</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hanjiang-welding.vercel.app/en/products/wsm-400" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://hanjiang-welding.vercel.app/products/wsm-400" />
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hanjiang-welding.vercel.app/en/products/wsm-400-pulse</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hanjiang-welding.vercel.app/en/products/wsm-400-pulse" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://hanjiang-welding.vercel.app/products/wsm-400-pulse" />
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hanjiang-welding.vercel.app/en/products/nbm-500</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hanjiang-welding.vercel.app/en/products/nbm-500" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://hanjiang-welding.vercel.app/products/nbm-500" />
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hanjiang-welding.vercel.app/en/products/zx7-400</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hanjiang-welding.vercel.app/en/products/zx7-400" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://hanjiang-welding.vercel.app/products/zx7-400" />
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hanjiang-welding.vercel.app/en/products/lgk-100</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hanjiang-welding.vercel.app/en/products/lgk-100" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://hanjiang-welding.vercel.app/products/lgk-100" />
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hanjiang-welding.vercel.app/en/products/dhj-630</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hanjiang-welding.vercel.app/en/products/dhj-630" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://hanjiang-welding.vercel.app/products/dhj-630" />
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

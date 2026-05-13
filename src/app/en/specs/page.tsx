@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { productsEn } from "@/data/products-en";
 import FooterEn from "@/components/en/FooterEn";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Welding Machine Specifications | HanJang Full Product Range",
+  description: "Technical specifications comparison for all HanJang welding machines. Compare TIG, MIG/MAG, ARC, and Plasma Cutter parameters side by side. CE & ISO certified.",
+};
 
 const specKeys = [
   "Input Power",

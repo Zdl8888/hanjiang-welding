@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { products } from "@/data/products";
 import Footer from "@/components/Footer";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "技术参数对比 | 悍将焊机全系列产品规格",
+  description: "悍将焊机全系列产品核心技术参数一览表。对比氩弧焊机、二保焊机、手工焊机、等离子切割机规格参数，方便选型。CE & ISO 认证。",
+};
 
 const specKeys = [
   "输入电源",
